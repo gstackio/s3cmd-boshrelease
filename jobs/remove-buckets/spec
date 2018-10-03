@@ -1,5 +1,5 @@
 ---
-name: create-buckets
+name: remove-buckets
 
 templates:
   bin/run: bin/run
@@ -14,7 +14,7 @@ properties:
 
   buckets:
     description: |
-      A list of buckets to create.
+      A list of buckets to remove.
     default: []
 
   s3.host_base:

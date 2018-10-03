@@ -14,5 +14,6 @@ source "/var/vcap/packages/python-dateutil/bosh/runtime.env"
 source "/var/vcap/packages/s3cmd/bosh/runtime.env"
 
 for bucket in <%= p('buckets').map({ |bucket| esc(bucket) }).join(' ') %>; do
-    s3cmd mb "s3://${bucket}"
+    s3cmd --config=/var/vcap/jobs/create-buckets/config/s3cfg \
+        mb "s3://${bucket}"
 done
