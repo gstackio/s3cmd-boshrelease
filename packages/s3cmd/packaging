@@ -23,7 +23,7 @@ popd
 
 mkdir "${BOSH_INSTALL_TARGET}/bosh"
 
-cat > ${BOSH_INSTALL_TARGET}/bosh <<EOF
+cat > ${BOSH_INSTALL_TARGET}/bosh/runtime.env <<EOF
 export PATH=/var/vcap/packages/s3cmd/bin:\$PATH
 export PYTHONPATH=/var/vcap/packages/s3cmd/lib/python2.7/site-packages:\$PYTHONPATH
 EOF
