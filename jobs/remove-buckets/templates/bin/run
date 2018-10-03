@@ -15,5 +15,7 @@ source "/var/vcap/packages/s3cmd/bosh/runtime.env"
 
 for bucket in <%= p('buckets').map{ |bucket| esc(bucket) }.join(' ') %>; do
     s3cmd --config=/var/vcap/jobs/remove-buckets/config/s3cfg \
+        rm -rf "s3://${bucket}"
+    s3cmd --config=/var/vcap/jobs/remove-buckets/config/s3cfg \
         rb "s3://${bucket}"
 done
