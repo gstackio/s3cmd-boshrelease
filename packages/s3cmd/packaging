@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+s3cmd_version=2.0.2
+
+source "/var/vcap/packages/python-2.7/bosh/runtime.env"
+
+echo "Extracting s3cmd..."
+tar -zxvf "s3cmd-${s3cmd_version}.tar.gz"
+
+echo "Creating the s3cmd site packages..."
+mkdir -p "${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages"
+
+echo "Setting the PYTHONPATH with s3cmd site packages..."
+pushd "s3cmd-${s3cmd_version}"
+    python setup.py install --prefix="${BOSH_INSTALL_TARGET}"
+popd
+
+
+mkdir "${BOSH_INSTALL_TARGET}/bosh"
+
+cat > ${BOSH_INSTALL_TARGET}/bosh <<EOF
+export PATH=/var/vcap/packages/s3cmd/bin:\$PATH
+export PYTHONPATH=/var/vcap/packages/s3cmd/lib/python2.7/site-packages:\$PYTHONPATH
+EOF

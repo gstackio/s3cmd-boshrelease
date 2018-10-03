@@ -1,0 +1,8 @@
+---
+name: python-dateutil
+
+dependencies:
+  - python-2.7
+
+files:
+  - python-dateutil-*.tar.gz
