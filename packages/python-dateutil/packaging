@@ -13,6 +13,9 @@ echo "Creating the python-dateutil site packages..."
 mkdir -p "${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages"
 
 echo "Setting the PYTHONPATH with python-dateutil site packages..."
+export PYTHONPATH=${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages:${PYTHONPATH}
+
+echo "Installing python-dateutil..."
 pushd "python-dateutil-${dateutil_version}"
     python setup.py install --prefix="${BOSH_INSTALL_TARGET}"
 popd

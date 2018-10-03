@@ -13,6 +13,9 @@ echo "Creating the s3cmd site packages..."
 mkdir -p "${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages"
 
 echo "Setting the PYTHONPATH with s3cmd site packages..."
+export PYTHONPATH=${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages:${PYTHONPATH}
+
+echo "Installing s3cmd..."
 pushd "s3cmd-${s3cmd_version}"
     python setup.py install --prefix="${BOSH_INSTALL_TARGET}"
 popd
