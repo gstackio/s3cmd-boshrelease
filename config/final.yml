@@ -1,1 +1,7 @@
+---
 name: s3cmd
+blobstore:
+  provider: s3
+  options:
+    bucket_name: s3cmd-boshrelease
+    region: eu-west-3
