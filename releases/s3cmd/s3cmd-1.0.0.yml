@@ -1,0 +1,31 @@
+name: s3cmd
+version: 1.0.0
+commit_hash: b588996
+uncommitted_changes: false
+jobs:
+- name: create-buckets
+  version: f6b21403f9962f293822dceff21007c612c655e7
+  fingerprint: f6b21403f9962f293822dceff21007c612c655e7
+  sha1: 369fcaed562d97c435871b039c56751703e96bf7
+- name: remove-buckets
+  version: d62545dc740b66ca140375b2323f1540f4eb8763
+  fingerprint: d62545dc740b66ca140375b2323f1540f4eb8763
+  sha1: 5d7243d5f40543bed2d76141aee56253471113e4
+packages:
+- name: python-2.7
+  version: c04734a732cf4dd4e6c72ab122f0949a2fda5fc9
+  fingerprint: c04734a732cf4dd4e6c72ab122f0949a2fda5fc9
+  sha1: bee8d70a92a951ae5e303899f862ba2a769c7ebb
+  dependencies: []
+- name: python-dateutil
+  version: 4687fa5ca74ec3686d56d5eaa87e0bd7112abb28
+  fingerprint: 4687fa5ca74ec3686d56d5eaa87e0bd7112abb28
+  sha1: 58c84f6cb80aa49d78a00aba5653713ab4abc3b6
+  dependencies:
+  - python-2.7
+- name: s3cmd
+  version: 642f5cf4929a9d36aadcf3ea1367440e80326240
+  fingerprint: 642f5cf4929a9d36aadcf3ea1367440e80326240
+  sha1: b276f56eeffdd602ce9cccf500f0b915d7b2847a
+  dependencies:
+  - python-2.7
