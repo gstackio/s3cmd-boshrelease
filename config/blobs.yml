@@ -1,20 +1,20 @@
-Python-2.7.15.tgz:
-  size: 17496336
-  object_id: 17aef774-383f-47c9-4087-cf17850acdba
-  sha: c9750707d127d39a6868e1e55f7cd8c7be006b89
-pip-18.0.tar.gz:
-  size: 1249656
-  object_id: 0156f58f-9702-4ea1-7222-8cbf4ebc5a3a
-  sha: 337f4694bfcd4d698d9b02b38a7520fabc42a1d9
-python-dateutil-2.7.3.tar.gz:
-  size: 302871
-  object_id: 69ad360a-23a6-460a-7616-d9845c95cb7a
-  sha: b1aeb913996fc6660ea42a7b31b1331d41a8a13c
-s3cmd-2.0.2.tar.gz:
-  size: 124266
-  object_id: 6ff735e1-1d02-4c92-6259-d20c5ffbe941
-  sha: d5bcbe087eaa8ecaa9c0e962296ce0890f291ad2
-setuptools-40.4.3.zip:
-  size: 854871
-  object_id: ead766dc-49f8-4f52-5667-6cfc27ccfea3
-  sha: a87d02021249fabcb13d516e509919ca6557610a
+Python-3.10.0.tgz:
+  size: 25007016
+  object_id: fe2ec53c-ee55-43bd-5f92-18ac77b7a159
+  sha: sha256:c4e0cbad57c90690cb813fb4663ef670b4d0f587d8171e2c42bd4c9245bd2758
+libffi-dev_3.2.1-8_amd64.deb:
+  size: 156164
+  object_id: 011bbae3-5a69-46cc-68f0-bd9ef4313550
+  sha: sha256:ddf07b70dbef7858e3c0df764d3ee12bef12f1badcd947d4614d6567c7026969
+pip-21.3.1.tar.gz:
+  size: 1731517
+  object_id: 9c5a91c4-2a60-47be-466f-b18b416e5b02
+  sha: sha256:fd11ba3d0fdb4c07fbc5ecbba0b1b719809420f25038f8ee3cd913d3faa3033a
+s3cmd-2.2.0.tar.gz:
+  size: 134390
+  object_id: 18d102a9-79e6-4501-4d9b-2d2c3d433b0c
+  sha: sha256:2a7d2afe09ce5aa9f2ce925b68c6e0c1903dd8d4e4a591cd7047da8e983a99c3
+setuptools-58.3.0.tar.gz:
+  size: 2268278
+  object_id: ee797793-98d0-4711-4388-cdba0a02af8f
+  sha: sha256:b0c2461641b58fe30e11d4c3dfba316c513bdf9ec85f9fed0c871c678447205e

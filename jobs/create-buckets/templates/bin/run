@@ -9,7 +9,7 @@
 
 set -e
 
-source "/var/vcap/packages/python-2.7/bosh/runtime.env"
+source "/var/vcap/packages/python-3.10/bosh/runtime.env"
 source "/var/vcap/packages/python-dateutil/bosh/runtime.env"
 source "/var/vcap/packages/s3cmd/bosh/runtime.env"
 

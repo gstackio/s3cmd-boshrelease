@@ -2,20 +2,20 @@
 
 set -e
 
-python_version=2.7.15
-python_sha256=18617d1f15a380a919d517630a9cd85ce17ea602f9bbdc58ddc672df4b0239db
+python_version=3.10.0
+python_sha256=c4e0cbad57c90690cb813fb4663ef670b4d0f587d8171e2c42bd4c9245bd2758
 
-setuptools_version=40.4.3
-setuptools_sha256=acbc5740dd63f243f46c2b4b8e2c7fd92259c2ddb55a4115b16418a2ed371b15
+libffi_version=3.2.1-8
+libffi_sha256=ddf07b70dbef7858e3c0df764d3ee12bef12f1badcd947d4614d6567c7026969
 
-pip_version=18.0
-pip_sha256=a0e11645ee37c90b40c46d607070c4fd583e2cd46231b1c06e389c5e814eed76
+setuptools_version=58.3.0
+setuptools_sha256=b0c2461641b58fe30e11d4c3dfba316c513bdf9ec85f9fed0c871c678447205e
 
-dateutil_version=2.7.3
-dateutil_sha256=e27001de32f627c22380a688bcc43ce83504a7bc5da472209b4c70f02829f0b8
+pip_version=21.3.1
+pip_sha256=fd11ba3d0fdb4c07fbc5ecbba0b1b719809420f25038f8ee3cd913d3faa3033a
 
-s3cmd_version=2.0.2
-s3cmd_sha256=9f244c0c10d58d0ccacbba3aa977463e32491bdd9d95109e27b67e4d46c5bd52
+s3cmd_version=2.2.0
+s3cmd_sha256=2a7d2afe09ce5aa9f2ce925b68c6e0c1903dd8d4e4a591cd7047da8e983a99c3
 
 
 function main() {
@@ -32,22 +32,22 @@ function main() {
         "Python-${python_version}.tgz"
 
     download_add_blob \
-        "https://files.pythonhosted.org/packages/6e/9c/6a003320b00ef237f94aa74e4ad66c57a7618f6c79d67527136e2544b728/setuptools-${setuptools_version}.zip" \
-        "${setuptools_sha256}" \
-        "${release_dir}/tmp/setuptools-${setuptools_version}.zip" \
-        "setuptools-${setuptools_version}.zip"
+        "http://archive.ubuntu.com/ubuntu/pool/main/libf/libffi/libffi-dev_${libffi_version}_amd64.deb" \
+        "${libffi_sha256}" \
+        "${release_dir}/tmp/libffi-dev_${libffi_version}_amd64.deb" \
+        "libffi-dev_${libffi_version}_amd64.deb"
 
     download_add_blob \
-        "https://files.pythonhosted.org/packages/69/81/52b68d0a4de760a2f1979b0931ba7889202f302072cc7a0d614211bc7579/pip-${pip_version}.tar.gz" \
+        "https://files.pythonhosted.org/packages/80/98/8de0fd3e86d8286a2594e3fa6afc46d751130d26ebb7b1f34e9067992c6f/setuptools-${setuptools_version}.tar.gz" \
+        "${setuptools_sha256}" \
+        "${release_dir}/tmp/setuptools-${setuptools_version}.tar.gz" \
+        "setuptools-${setuptools_version}.tar.gz"
+
+    download_add_blob \
+        "https://files.pythonhosted.org/packages/da/f6/c83229dcc3635cdeb51874184241a9508ada15d8baa337a41093fab58011/pip-${pip_version}.tar.gz" \
         "${pip_sha256}" \
         "${release_dir}/tmp/pip-${pip_version}.tar.gz" \
         "pip-${pip_version}.tar.gz"
-
-    download_add_blob \
-        "https://files.pythonhosted.org/packages/a0/b0/a4e3241d2dee665fea11baec21389aec6886655cd4db7647ddf96c3fad15/python-dateutil-${dateutil_version}.tar.gz" \
-        "${dateutil_sha256}" \
-        "${release_dir}/tmp/python-dateutil-${dateutil_version}.tar.gz" \
-        "python-dateutil-${dateutil_version}.tar.gz"
 
     download_add_blob \
         "https://github.com/s3tools/s3cmd/releases/download/v${s3cmd_version}/s3cmd-${s3cmd_version}.tar.gz" \

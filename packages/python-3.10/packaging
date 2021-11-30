@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -e
+
+python_family_version="3.10"
+python_version="${python_family_version}.0"
+libffi_version="3.2.1-8"
+setuptools_version="58.3.0"
+pip_version="21.3.1"
+
+
+
+echo "Installing libffi-dev..."
+dpkg -i "libffi-dev_${libffi_version}_amd64.deb"
+
+
+
+echo "Copying compile.env..."
+mkdir "${BOSH_INSTALL_TARGET}/bosh"
+cp runtime.env "${BOSH_INSTALL_TARGET}/bosh/runtime.env"
+cp compile.env "${BOSH_INSTALL_TARGET}/bosh/compile.env"
+
+
+
+echo "Extracting python..."
+tar -xzvf "Python-${python_version}.tgz"
+
+echo "Building python..."
+pushd "Python-${python_version}"
+  ./configure --prefix="${BOSH_INSTALL_TARGET}"
+  make
+  make install
+popd
+
+
+
+echo "Creating the site packages directory..."
+site_packages_dir="${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages"
+mkdir -p "${site_packages_dir}"
+
+echo "Setting the PYTHONPATH with site packages directory..."
+export PYTHONPATH=${site_packages_dir}:${PYTHONPATH}
+
+
+
+echo "Extracting setuptools..."
+tar -xzvf "setuptools-${setuptools_version}.tar.gz"
+
+echo "Installing setuptools..."
+pushd "setuptools-${setuptools_version}"
+  "/var/vcap/packages/python-${python_family_version}/bin/python" setup.py install --prefix="${BOSH_INSTALL_TARGET}"
+popd
+
+
+
+echo "Extracting pip..."
+tar -xzvf "pip-${pip_version}.tar.gz"
+
+echo "Setting the PYTHONPATH with setuptools and pip site packages..."
+export PYTHONPATH=${site_packages_dir}:${PYTHONPATH}
+
+echo "Installing pip..."
+pushd "pip-${pip_version}"
+  "/var/vcap/packages/python-${python_family_version}/bin/python" setup.py install --prefix="${BOSH_INSTALL_TARGET}"
+popd

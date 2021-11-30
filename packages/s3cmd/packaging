@@ -2,18 +2,19 @@
 
 set -e
 
-s3cmd_version=2.0.2
+python_family_version="3.10"
+s3cmd_version="2.2.0"
 
-source "/var/vcap/packages/python-2.7/bosh/runtime.env"
+source "/var/vcap/packages/python-${python_family_version}/bosh/runtime.env"
 
 echo "Extracting s3cmd..."
 tar -zxvf "s3cmd-${s3cmd_version}.tar.gz"
 
 echo "Creating the s3cmd site packages..."
-mkdir -p "${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages"
+mkdir -p "${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages"
 
 echo "Setting the PYTHONPATH with s3cmd site packages..."
-export PYTHONPATH=${BOSH_INSTALL_TARGET}/lib/python2.7/site-packages:${PYTHONPATH}
+export PYTHONPATH=${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages:${PYTHONPATH}
 
 echo "Installing s3cmd..."
 pushd "s3cmd-${s3cmd_version}"
@@ -25,5 +26,5 @@ mkdir "${BOSH_INSTALL_TARGET}/bosh"
 
 cat > ${BOSH_INSTALL_TARGET}/bosh/runtime.env <<EOF
 export PATH=/var/vcap/packages/s3cmd/bin:\$PATH
-export PYTHONPATH=/var/vcap/packages/s3cmd/lib/python2.7/site-packages:\$PYTHONPATH
+export PYTHONPATH=/var/vcap/packages/s3cmd/lib/python${python_family_version}/site-packages:\$PYTHONPATH
 EOF

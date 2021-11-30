@@ -6,8 +6,7 @@ templates:
   config/s3cfg: config/s3cfg
 
 packages:
-  - python-2.7
-  - python-dateutil
+  - python-3.10
   - s3cmd
 
 properties:
