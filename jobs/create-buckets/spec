@@ -20,8 +20,8 @@ properties:
     desctiption: |
       The S3 server hostname or IP address.
 
-      Subdomain-based buckets will be of form
-      '%(bucket).s3server.easyfoundry.internal'.
+      Subdomain-based buckets will be of form '%(bucket).<s3.host_base>'.
+    default: s3.amazonaws.com
 
   s3.use_https:
     description: |
