@@ -1,12 +1,16 @@
 s3cmd BOSH Release
 ==================
 
-This BOSH Relase provides two errands `create-buckets` and `remove-buckets` in
-order to create or destroy S3 buckets, using the [`s3cmd`][s3cmd_repo] CLI.
+This BOSH Relase provides two errands `create-buckets` and `remove-buckets`
+that can help in creating or destroing S3 buckets, using the
+[`s3cmd`][s3cmd_repo] CLI.
 
-This can be useful to migrate “local” Nginx-based blobstores to S3 external
-blobstores too. This is a common use-case when in need for more reliabile
-object storage for a BOSH Director or a Cloud Foundry deployment.
+A third `sync-local-blobs-to-s3` errand is designed to be deployed on a Bosh
+Director VM. When triggered, it copies the local blobs of the Nginx-based
+blobstore to some bucket in an external S3 server. This is useful when
+migrating from a “local” Nginx-based blobstore to an external S3 blobstore.
+Using an external S3 blobstore provides more reliabile object storage for a
+BOSH Director or a Cloud Foundry deployment.
 
 [s3cmd_repo]: https://github.com/s3tools/s3cmd
 
@@ -16,6 +20,12 @@ Contributing
 ------------
 
 Please feel free to submit issues and pull requests.
+
+The `add-blobs.sh` script helps in re-building the release blobs when
+necessary.
+
+CI/CD is made in a Concourse pipeline. Status of the tests run are sbmitted
+back to GitHub by Concourse.
 
 
 
