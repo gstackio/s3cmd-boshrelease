@@ -1,9 +1,9 @@
 [default]
-access_key = <%= p('s3.access_key_id') %>
-secret_key = <%= p('s3.secret_access_key') %>
+access_key = <%= p('blobstore.access_key_id') %>
+secret_key = <%= p('blobstore.secret_access_key') %>
 
-check_ssl_certificate = <%= p('s3.skip_ssl_validation') ? 'False' : 'True' %>
-check_ssl_hostname = <%= p('s3.skip_ssl_validation') ? 'False' : 'True' %>
-host_base = <%= p('s3.host_base') %>
-host_bucket = %(bucket).<%= p('s3.host_base') %>
-use_https = <%= p('s3.use_https') ? 'True' : 'False' %>
+check_ssl_certificate = <%= p('blobstore.ssl_verify_peer') ? 'True' : 'False' %>
+check_ssl_hostname = <%= p('blobstore.ssl_verify_peer') ? 'True' : 'False' %>
+host_base = <%= p('blobstore.host_base') %>
+host_bucket = %(bucket).<%= p('blobstore.host_base') %>
+use_https = <%= p('blobstore.use_https') ? 'True' : 'False' %>

@@ -10,7 +10,9 @@ Director VM. When triggered, it copies the local blobs of the Nginx-based
 blobstore to some bucket in an external S3 server. This is useful when
 migrating from a “local” Nginx-based blobstore to an external S3 blobstore.
 Using an external S3 blobstore provides more reliabile object storage for a
-BOSH Director or a Cloud Foundry deployment.
+BOSH Director or a Cloud Foundry deployment. For convenience, the
+configuration for this errand matches closely the one used by the Bosh
+Director.
 
 [s3cmd_repo]: https://github.com/s3tools/s3cmd
 
