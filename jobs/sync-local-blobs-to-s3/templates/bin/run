@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+<%
+    require "shellwords"
+
+    def esc(x)
+        Shellwords.shellescape(x)
+    end
+%>
+
+set -e
+
+source "/var/vcap/packages/python-3.10/bosh/runtime.env"
+source "/var/vcap/packages/s3cmd/bosh/runtime.env"
+
+s3cmd \
+    --verbose \
+    --skip-existing \
+    --no-check-md5 \
+    --config="/var/vcap/jobs/sync-local-blobs-to-s3/config/s3cfg" \
+    sync \
+        /var/vcap/store/blobstore/store/**/* \
+        s3://<%= esc(p('blobstore.bucket_name')) %>/

@@ -1,0 +1,41 @@
+---
+name: sync-local-blobs-to-s3
+
+templates:
+  bin/run: bin/run
+  config/s3cfg: config/s3cfg
+
+packages:
+  - python-3.10
+  - s3cmd
+
+properties:
+
+  s3.bucket_name:
+    description: |
+      An S3 bucket to sync local blobs to.
+
+  s3.host_base:
+    desctiption: |
+      The S3 server hostname or IP address.
+
+      Subdomain-based buckets will be of form '%(bucket).<s3.host_base>'.
+    default: s3.amazonaws.com
+
+  s3.use_https:
+    description: |
+      Whether 'https' should be used instead of 'http'.
+    default: true
+
+  s3.skip_ssl_validation:
+    description: |
+      Whether TLS validation should be skipped or done.
+    default: false
+
+  s3.access_key_id:
+    description: |
+      The S3 access key ID to use when accessing the S3 server.
+
+  s3.secret_access_key:
+    description: |
+      The S3 secret access key to use when accessing the S3 server.
