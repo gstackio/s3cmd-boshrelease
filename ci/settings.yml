@@ -1,0 +1,78 @@
+---
+meta:
+  name:    python
+  release: s3cmd BOSH Release
+  target:  gk-plat-devs
+  url:     https://ci.gstack.io
+  team:    gk-plat-devs
+
+  test-errands: # space-separated list
+    create-bucket
+    remove-bucket
+
+  initial_version: "1.1.0"
+
+  manifest:
+    directory: manifests
+    vars: |
+      --
+      deployment_name: s3cmd-scality-testflight
+      network_name: default
+      bucket_name: s3cmd-testflight
+      s3server_endpoint_hostname: s3server.s3cmd-scality-testflight.internal
+      s3server_tcp_port: 443
+      custom_account_access_key_id: TestflightAccountAccessKey
+    vars-pr: |
+      --
+      deployment_name: s3cmd-scality-testflight-pr
+      network_name: default
+      bucket_name: s3cmd-testflight-pr
+      s3server_endpoint_hostname: s3server.s3cmd-scality-testflight-pr.internal
+      s3server_tcp_port: 443
+      custom_account_access_key_id: TestflightPrAccountAccessKey
+
+  git:
+    email:  ((git-commit-email))
+    name:   ((git-commit-name))
+
+  image:
+    registry:
+      username: ((docker-registry-username))
+      password: ((docker-registry-password))
+
+  bosh-lite:
+    target:   ((bosh-lite-environment))
+    cacert:   ((bosh-lite-ca-cert))
+    username: ((bosh-lite-client))
+    password: ((bosh-lite-client-secret))
+
+  aws:
+    bucket:      (( grab meta.pipeline ))
+    region_name: eu-west-3
+    access_key:  ((aws-access-key))
+    secret_key:  ((aws-secret-key))
+
+  github:
+    owner:  gstackio
+    repo:   (( grab meta.pipeline ))
+    branch: master
+    private_key:  ((github-private-key))
+    access_token: ((github-access-token))
+
+  slack:
+    webhook:       ((slack-webhook))
+    username:      ((slack-username))
+    icon:          ((slack-icon-url))
+    channel:       (( concat "#" meta.name "-boshrelease" ))
+    blob_success:  '(( concat ": New version of  was detected, and updated in master. <" meta.url "/teams//pipelines/| Cut a new release?>" ))'
+    blob_failure:  '(( concat ": :airplane_arriving: <" meta.url "/teams//pipelines//jobs//builds/| Failed to update the blob for >" ))'
+
+resources:
+
+  - name: git
+    check_every: 24h
+    webhook_token: ((concourse-webhook-token))
+
+  - name: git-pull-requests
+    check_every: 24h
+    webhook_token: ((concourse-webhook-token))
