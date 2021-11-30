@@ -12,6 +12,17 @@ set -e
 source "/var/vcap/packages/python-3.10/bosh/runtime.env"
 source "/var/vcap/packages/s3cmd/bosh/runtime.env"
 
+wait_sec=1
+retries_left=15
+while [[ ${retries_left} -gt 0 ]] &&
+        ! nc -z <%= esc(p('s3.host_base')) %> <%= p('s3.use_https') ? 443 : 80 %>; do
+    echo "INFO: can't connect to S3 server." \
+        "Waiting ${wait_sec} sec before retrying." \
+        "${retries_left} reties left."
+    sleep "${wait_sec}"
+    retries_left=$(( ${retries_left} - 1 ))
+done
+
 for bucket in <%= p('buckets').map{ |bucket| esc(bucket) }.join(' ') %>; do
     s3cmd --config=/var/vcap/jobs/remove-buckets/config/s3cfg \
         rm -rf "s3://${bucket}"
