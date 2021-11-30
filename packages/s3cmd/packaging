@@ -8,7 +8,7 @@ s3cmd_version="2.2.0"
 source "/var/vcap/packages/python-${python_family_version}/bosh/runtime.env"
 
 echo "Extracting s3cmd..."
-tar -zf "s3cmd-${s3cmd_version}.tar.gz"
+tar -xf "s3cmd-${s3cmd_version}.tar.gz"
 
 echo "Creating the s3cmd site packages..."
 mkdir -p "${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages"
