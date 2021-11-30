@@ -5,4 +5,4 @@ bucket_name: main
 
 s3server_endpoint_hostname: s3server.internal
 s3server_tcp_port: 443
-custom_account_access_key_id: MainAccountAccessKey
+scality_access_key_id: MainAccountAccessKey
