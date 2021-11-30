@@ -23,7 +23,7 @@ cp compile.env "${BOSH_INSTALL_TARGET}/bosh/compile.env"
 
 
 echo "Extracting python..."
-tar -xzvf "Python-${python_version}.tgz"
+tar -xf "Python-${python_version}.tgz"
 
 echo "Building python..."
 pushd "Python-${python_version}"
@@ -44,22 +44,22 @@ export PYTHONPATH=${site_packages_dir}:${PYTHONPATH}
 
 
 echo "Extracting setuptools..."
-tar -xzvf "setuptools-${setuptools_version}.tar.gz"
+tar -xf "setuptools-${setuptools_version}.tar.gz"
 
 echo "Installing setuptools..."
 pushd "setuptools-${setuptools_version}"
-  "/var/vcap/packages/python-${python_family_version}/bin/python" setup.py install --prefix="${BOSH_INSTALL_TARGET}"
+  "${BOSH_INSTALL_TARGET}/bin/python3" setup.py install --prefix="${BOSH_INSTALL_TARGET}"
 popd
 
 
 
 echo "Extracting pip..."
-tar -xzvf "pip-${pip_version}.tar.gz"
+tar -xf "pip-${pip_version}.tar.gz"
 
 echo "Setting the PYTHONPATH with setuptools and pip site packages..."
 export PYTHONPATH=${site_packages_dir}:${PYTHONPATH}
 
 echo "Installing pip..."
 pushd "pip-${pip_version}"
-  "/var/vcap/packages/python-${python_family_version}/bin/python" setup.py install --prefix="${BOSH_INSTALL_TARGET}"
+  "${BOSH_INSTALL_TARGET}/bin/python3" setup.py install --prefix="${BOSH_INSTALL_TARGET}"
 popd
