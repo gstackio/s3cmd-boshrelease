@@ -11,14 +11,15 @@ echo "Extracting s3cmd..."
 tar -xf "s3cmd-${s3cmd_version}.tar.gz"
 
 echo "Creating the s3cmd site packages..."
-mkdir -p "${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages"
+site_package_dir="${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages"
+mkdir -p "${site_package_dir}"
 
 echo "Setting the PYTHONPATH with s3cmd site packages..."
-export PYTHONPATH=${BOSH_INSTALL_TARGET}/lib/python${python_family_version}/site-packages:${PYTHONPATH}
+export PYTHONPATH=${site_package_dir}:${PYTHONPATH}
 
 echo "Installing s3cmd..."
 pushd "s3cmd-${s3cmd_version}"
-    python setup.py install --prefix="${BOSH_INSTALL_TARGET}"
+    python3 setup.py install --prefix="${BOSH_INSTALL_TARGET}"
 popd
 
 
