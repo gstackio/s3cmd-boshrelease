@@ -3,6 +3,6 @@ deployment_name: s3cmd-scality
 network_name: default
 bucket_name: main
 
-s3server_endpoint_hostname: s3server.internal
+s3server_endpoint_hostname: s3server.services.internal
 s3server_tcp_port: 443
 scality_access_key_id: MainAccountAccessKey
