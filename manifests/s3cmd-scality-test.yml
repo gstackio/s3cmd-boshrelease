@@ -74,6 +74,11 @@ update:
   max_in_flight: 1
   update_watch_time: 1000-60000
 
+stemcells:
+  - alias: default
+    os: ubuntu-bionic
+    version: latest
+
 releases:
 - name: s3cmd
   sha1: e13f2a688071525b8a603996e4711449d635dc0e
