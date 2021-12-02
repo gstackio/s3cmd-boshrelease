@@ -1,0 +1,42 @@
+name: s3cmd
+version: 1.1.0
+commit_hash: a4ee806
+uncommitted_changes: false
+jobs:
+- name: create-buckets
+  version: 13efc0891812423693c4c6c88d37d944e020bf3d9d2d6366162948319a39122f
+  fingerprint: 13efc0891812423693c4c6c88d37d944e020bf3d9d2d6366162948319a39122f
+  sha1: sha256:0ef1395a5c22e0fdd081ce6c0834491d3d6cdee03e312fa985b117cfc42b22c4
+  packages:
+  - python-3.10
+  - s3cmd
+- name: remove-buckets
+  version: 505985b6975c83c57ec90412c8ef47feb5a562d5500e78ac4742f31a2328d35f
+  fingerprint: 505985b6975c83c57ec90412c8ef47feb5a562d5500e78ac4742f31a2328d35f
+  sha1: sha256:020d59d861d4be419a0261f4df76094f9b7e09c4eece2a3355f9bcc1be454fa8
+  packages:
+  - python-3.10
+  - s3cmd
+- name: sync-local-blobs-to-s3
+  version: 8223a95a82cb93fc030bfe798390b0a1c4a5b94e292a0020ffa11568cd7a8d18
+  fingerprint: 8223a95a82cb93fc030bfe798390b0a1c4a5b94e292a0020ffa11568cd7a8d18
+  sha1: sha256:81694db3b8e63e9b379bbb963769eaeb5583a60a4b7fade9e85db7074e6a4055
+  packages:
+  - python-3.10
+  - s3cmd
+packages:
+- name: python-3.10
+  version: 7dc2fffe0842ccfe264d178d7391882a8b874c27c452cdf7e08494015bc1b14e
+  fingerprint: 7dc2fffe0842ccfe264d178d7391882a8b874c27c452cdf7e08494015bc1b14e
+  sha1: sha256:2970b054fe1e462d8ef84140526f8097b33761b5e2387ed1a3a8e2ddb8fbb319
+  dependencies: []
+- name: s3cmd
+  version: d16e071c37925cde151b2c5ac60c2c5043ec0250140ddc2f99c14d00b1082be9
+  fingerprint: d16e071c37925cde151b2c5ac60c2c5043ec0250140ddc2f99c14d00b1082be9
+  sha1: sha256:a47adbcfaeaf5eaddc0ccfd87c9b37d6e1d524e2402d9639888e01eccbce2bc1
+  dependencies:
+  - python-3.10
+license:
+  version: fa8c76e69c0d7a45f68807e8d5381bde68b3751ce779c6ecc1856045ecb1805a
+  fingerprint: fa8c76e69c0d7a45f68807e8d5381bde68b3751ce779c6ecc1856045ecb1805a
+  sha1: sha256:b113adc8733bc993ce833ccd06b09bada2597ce94c04ebab9a3fea71ed955f88

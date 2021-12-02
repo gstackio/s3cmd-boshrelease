@@ -75,17 +75,11 @@ update:
   update_watch_time: 1000-60000
 
 releases:
-  - name: s3cmd
-    version: "1.0.0"
-    url: https://github.com/gstackio/s3cmd-boshrelease/releases/download/v1.0.0/s3cmd-boshrelease-1.0.0.tgz
-    sha1: 80993d85e34f6821efd3084e6c9b862936493503
-
-  - name: docker
-    version: "35.3.4"
-    url: https://bosh.io/d/github.com/cloudfoundry-incubator/docker-boshrelease?v=35.3.4
-    sha1: 8dcacf558067ed5302e30e4c8de928ee7917695e
-
-stemcells:
-  - alias: default
-    os: ubuntu-bionic
-    version: latest
+- name: s3cmd
+  sha1: 7bd95458025073db6ddf922317676039a63268b0
+  url: https://github.com/gstackio/s3cmd-boshrelease/releases/download/v1.1.0/s3cmd-1.1.0.tgz
+  version: 1.1.0
+- name: docker
+  sha1: 8dcacf558067ed5302e30e4c8de928ee7917695e
+  url: https://bosh.io/d/github.com/cloudfoundry-incubator/docker-boshrelease?v=35.3.4
+  version: 35.3.4
