@@ -76,8 +76,11 @@ update:
 
 releases:
 - name: s3cmd
-  sha1: 7bd95458025073db6ddf922317676039a63268b0
-  url: https://github.com/gstackio/s3cmd-boshrelease/releases/download/v1.1.0/s3cmd-1.1.0.tgz
+  sha1: e13f2a688071525b8a603996e4711449d635dc0e
+  stemcell:
+    os: ubuntu-bionic
+    version: "1.36"
+  url: https://s3.eu-west-3.amazonaws.com/s3cmd-boshrelease/compiled-releases/s3cmd/s3cmd-1.1.0-ubuntu-bionic-1.36-20211202-094158-084355707-20211202094159.tgz
   version: 1.1.0
 - name: docker
   sha1: 8dcacf558067ed5302e30e4c8de928ee7917695e
