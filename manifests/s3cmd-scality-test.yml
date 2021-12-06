@@ -174,18 +174,25 @@ variables:
     type: certificate
     options:
       ca: default_ca
-      consumes:
-        common_name: { from: s3server-address }
-        alternative_name: { from: s3server-address }
+      common_name: ((s3server_endpoint_hostname))
+      alternative_names:
+        - ((s3server_endpoint_hostname))
+    consumes:
+      alternative_name: { from: s3server-address }
     update_mode: converge
   - name: blobstore_server_tls
     type: certificate
     options:
       ca: default_ca
-      consumes:
-        common_name: { from: blobstore-address }
-        alternative_name: { from: blobstore-address }
+      common_name: ((blobstore_endpoint_hostname))
+      alternative_names:
+        - ((blobstore_endpoint_hostname))
+    consumes:
+      alternative_name: { from: blobstore-address }
     update_mode: converge
+
+features:
+  use_dns_addresses: true
 
 update:
   serial: true # instance groups to be deployed sequentially.
