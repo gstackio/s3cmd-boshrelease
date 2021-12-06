@@ -127,7 +127,7 @@ instance_groups:
         properties:
           blobstore:
             bucket_name: ((bucket_name))
-            host_base: ((s3server_endpoint_hostname))
+            host: ((s3server_endpoint_hostname))
             access_key_id: ((scality_access_key_id))
             secret_access_key: ((scality_secret_access_key))
 
@@ -144,6 +144,7 @@ instance_groups:
         properties:
           blobstore:
             port: ((blobstore_tcp_port))
+            enable_signed_urls: true
             director:
               user: director
               password: ((blobstore_director_password))

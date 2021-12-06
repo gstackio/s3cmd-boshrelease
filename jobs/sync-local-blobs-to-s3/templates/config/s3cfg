@@ -4,6 +4,6 @@ secret_key = <%= p('blobstore.secret_access_key') %>
 
 check_ssl_certificate = <%= p('blobstore.ssl_verify_peer') ? 'True' : 'False' %>
 check_ssl_hostname = <%= p('blobstore.ssl_verify_peer') ? 'True' : 'False' %>
-host_base = <%= p('blobstore.host_base') %>
-host_bucket = %(bucket).<%= p('blobstore.host_base') %>
-use_https = <%= p('blobstore.use_https') ? 'True' : 'False' %>
+host_base = <%= p('blobstore.host') %>
+host_bucket = %(bucket).<%= p('blobstore.host') %>
+use_https = <%= p('blobstore.use_ssl') ? 'True' : 'False' %>

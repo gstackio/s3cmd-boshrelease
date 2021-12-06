@@ -15,7 +15,7 @@ properties:
     description: |
       An S3 bucket to sync local blobs to.
 
-  blobstore.host_base:
+  blobstore.host:
     desctiption: |
       The S3 server hostname or IP address.
 
