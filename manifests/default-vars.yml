@@ -6,3 +6,6 @@ bucket_name: main
 s3server_endpoint_hostname: s3server.services.internal
 s3server_tcp_port: 443
 scality_access_key_id: MainAccountAccessKey
+
+blobstore_endpoint_hostname: blobstore.services.internal
+blobstore_tcp_port: 25250

@@ -2,6 +2,15 @@
 
 name: ((deployment_name))
 
+addons:
+  - name: custom-ca-certificates
+    jobs:
+      - name: ca_certs
+        release: os-conf
+        properties:
+          cert_list:
+            - ((default_ca.certificate))
+
 instance_groups:
   - name: s3server
     instances: 1
@@ -14,7 +23,6 @@ instance_groups:
           buckets: [ ((bucket_name)) ]
           s3:
             host_base: ((s3server_endpoint_hostname))
-            skip_ssl_validation: true
             access_key_id: ((scality_access_key_id))
             secret_access_key: ((scality_secret_access_key))
 
@@ -40,6 +48,10 @@ instance_groups:
               volumes:
                 - /var/vcap/store/s3server/data:/usr/src/app/localData
                 - /var/vcap/store/s3server/metadata:/usr/src/app/localMetadata
+                - /var/vcap/data/s3server/ca.key:/usr/src/app/ca.key
+                - /var/vcap/data/s3server/ca.crt:/usr/src/app/ca.crt
+                - /var/vcap/data/s3server/server.key:/usr/src/app/server.key
+                - /var/vcap/data/s3server/server.crt:/usr/src/app/server.crt
               bind_ports:
                 - ((s3server_tcp_port)):8000
               env_vars:
@@ -52,8 +64,94 @@ instance_groups:
                 - ENDPOINT=((s3server_endpoint_hostname))
                 - LISTEN_ADDR=0.0.0.0
 
+      - name: pre-start-script
+        release: os-conf
+        properties:
+          # This shim script below provides the necessary files for the
+          # certificates and private keys to be mounted into the 's3server'
+          # container in the 'containers' job above
+          script: |
+            #!/usr/bin/env bash
+            mkdir -p /var/vcap/data/s3server
+            chown vcap:vcap /var/vcap/data/s3server
+
+            touch /var/vcap/data/s3server/ca.key
+            chmod 600 /var/vcap/data/s3server/ca.key
+            # Notice: we don't provide any content for 'ca.key' here, because
+            # it does not make sense and the 'docker-entrypoint.sh' script
+            # actually doesn't require it to have any content when provided
+            # externally through some mounted file.
+
+            cat > /var/vcap/data/s3server/ca.crt <<'CA_CERT'
+            ((default_ca.certificate))
+            CA_CERT
+
+            touch /var/vcap/data/s3server/server.key
+            chmod 600 /var/vcap/data/s3server/server.key
+            cat > /var/vcap/data/s3server/server.key <<'SRV_PRIV_KEY'
+            ((s3server_server_tls.private_key))
+            SRV_PRIV_KEY
+
+            cat > /var/vcap/data/s3server/server.crt <<'SRV_CERT'
+            ((s3server_server_tls.certificate))
+            SRV_CERT
+
       - name: docker
         release: docker
+
+    persistent_disk_type: default
+    vm_type: default
+    stemcell: default
+    networks:
+      - name: ((network_name))
+
+  - name: blobstore
+    instances: 1
+    azs: [ z1 ]
+    jobs:
+
+      - name: pre-start-script
+        release: os-conf
+        properties:
+          # This script creates 3 test blobs into the blobstore
+          script: |
+            #!/usr/bin/env bash
+            mkdir --parents /var/vcap/data/blobstore/store/{28,bf,d0}
+            chown --recursive vcap:vcap /var/vcap/data/blobstore
+            touch /var/vcap/data/blobstore/store/28/cdd86fae-c380-43ae-9587-35ce7f8230d2
+            touch /var/vcap/data/blobstore/store/bf/4a478711-7a2d-41fd-a0e7-1a3cf1464e68
+            touch /var/vcap/data/blobstore/store/d0/7f3a9135-bbcd-42bc-b4de-73cf7660c3c7
+
+      - name: sync-local-blobs-to-s3
+        release: s3cmd
+        properties:
+          blobstore:
+            bucket_name: ((bucket_name))
+            host_base: ((s3server_endpoint_hostname))
+            access_key_id: ((scality_access_key_id))
+            secret_access_key: ((scality_secret_access_key))
+
+      - name: blobstore
+        release: bosh
+        provides:
+          blobstore-address:
+            aliases:
+              - domain: ((blobstore_endpoint_hostname))
+                shared: false
+        custom_provider_definitions:
+          - name: blobstore-address
+            type: address
+        properties:
+          blobstore:
+            port: ((blobstore_tcp_port))
+            director:
+              user: director
+              password: ((blobstore_director_password))
+            tls:
+              cert:
+                ca: ((default_ca.certificate))
+                certificate: ((blobstore_server_tls.certificate))
+                private_key: ((blobstore_server_tls.private_key))
 
     persistent_disk_type: default
     vm_type: default
@@ -64,6 +162,30 @@ instance_groups:
 variables:
   - name: scality_secret_access_key
     type: password
+  - name: blobstore_director_password
+    type: password
+
+  - name: default_ca
+    type: certificate
+    options:
+      is_ca: true
+      common_name: Default CA
+  - name: s3server_server_tls
+    type: certificate
+    options:
+      ca: default_ca
+      consumes:
+        common_name: { from: s3server-address }
+        alternative_name: { from: s3server-address }
+    update_mode: converge
+  - name: blobstore_server_tls
+    type: certificate
+    options:
+      ca: default_ca
+      consumes:
+        common_name: { from: blobstore-address }
+        alternative_name: { from: blobstore-address }
+    update_mode: converge
 
 update:
   serial: true # instance groups to be deployed sequentially.
@@ -91,3 +213,11 @@ releases:
   sha1: 8dcacf558067ed5302e30e4c8de928ee7917695e
   url: https://bosh.io/d/github.com/cloudfoundry-incubator/docker-boshrelease?v=35.3.4
   version: 35.3.4
+- name: os-conf
+  sha1: 386293038ae3d00813eaa475b4acf63f8da226ef
+  url: https://bosh.io/d/github.com/cloudfoundry/os-conf-release?v=22.1.2
+  version: 22.1.2
+- name: bosh
+  sha1: 23538b325d597f5d2f79fd367fb23642af931d87
+  url: https://bosh.io/d/github.com/cloudfoundry/bosh?v=271.17.0
+  version: 271.17.0
