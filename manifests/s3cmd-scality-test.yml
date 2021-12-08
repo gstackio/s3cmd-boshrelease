@@ -145,6 +145,7 @@ instance_groups:
           blobstore:
             port: ((blobstore_tcp_port))
             enable_signed_urls: true
+            secret: ((blobstore_signing_secret))
             director:
               user: director
               password: ((blobstore_director_password))
@@ -163,6 +164,9 @@ instance_groups:
 variables:
   - name: scality_secret_access_key
     type: password
+
+  - name: blobstore_signing_secret
+    type: password
   - name: blobstore_director_password
     type: password
 
@@ -171,6 +175,7 @@ variables:
     options:
       is_ca: true
       common_name: Default CA
+
   - name: s3server_server_tls
     type: certificate
     options:
@@ -181,6 +186,7 @@ variables:
     consumes:
       alternative_name: { from: s3server-address }
     update_mode: converge
+
   - name: blobstore_server_tls
     type: certificate
     options:
