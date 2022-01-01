@@ -155,6 +155,9 @@ instance_groups:
                 certificate: ((blobstore_server_tls.certificate))
                 private_key: ((blobstore_server_tls.private_key))
 
+      - name: bpm
+        release: bpm
+
     persistent_disk_type: default
     vm_type: default
     stemcell: default
@@ -235,3 +238,7 @@ releases:
   sha1: 23538b325d597f5d2f79fd367fb23642af931d87
   url: https://bosh.io/d/github.com/cloudfoundry/bosh?v=271.17.0
   version: 271.17.0
+- name: bpm
+  sha1: 0d48aa01a65b947b97570234eb2401e821a8bd35
+  url: https://bosh.io/d/github.com/cloudfoundry/bpm-release?v=1.1.15
+  version: 1.1.15
